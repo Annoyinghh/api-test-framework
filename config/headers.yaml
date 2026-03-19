@@ -1,0 +1,17 @@
+# 通用请求头配置
+
+default:
+  Content-Type: application/json
+  Accept: application/json
+  User-Agent: API-Test-Framework/1.0
+
+# 需要认证的请求头
+auth:
+  Content-Type: application/json
+  Accept: application/json
+  Authorization: Bearer ${token}
+
+# 表单请求头
+form:
+  Content-Type: application/x-www-form-urlencoded
+  Accept: application/json

@@ -1,0 +1,39 @@
+# API 测试框架配置文件
+
+# 环境配置
+env: test
+
+# 测试环境配置
+environments:
+  dev:
+    base_url: http://dev-api.example.com
+    timeout: 30
+  test:
+    base_url: http://test-api.example.com
+    timeout: 30
+  prod:
+    base_url: https://api.example.com
+    timeout: 30
+
+# 当前环境配置（根据 env 自动选择）
+base_url: http://test-api.example.com
+timeout: 30
+
+# 数据库配置（可选）
+database:
+  host: localhost
+  port: 3306
+  user: root
+  password: password
+  database: test_db
+
+# 报告配置
+report:
+  allure_dir: ./reports/allure-results
+  html_dir: ./reports/html
+
+# 日志配置
+log:
+  level: INFO
+  console: true
+  file: true

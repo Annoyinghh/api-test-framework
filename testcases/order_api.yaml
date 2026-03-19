@@ -1,0 +1,55 @@
+# 订单接口测试用例
+
+test_create_order:
+  name: "创建订单"
+  request:
+    method: POST
+    url: /api/v1/order/create
+    json:
+      user_id: 123
+      product_id: 456
+      quantity: 2
+      amount: 199.99
+  validate:
+    - eq: [status_code, 200]
+    - eq: [body.code, 0]
+    - contains: [body.message, "创建成功"]
+    - jsonpath: ["$.data.order_id", "order_id"]
+
+test_get_order_list:
+  name: "获取订单列表"
+  request:
+    method: GET
+    url: /api/v1/order/list
+    params:
+      user_id: 123
+      page: 1
+      page_size: 10
+  validate:
+    - eq: [status_code, 200]
+    - eq: [body.code, 0]
+
+test_get_order_detail:
+  name: "获取订单详情"
+  request:
+    method: GET
+    url: /api/v1/order/detail
+    params:
+      order_id: 789
+  validate:
+    - eq: [status_code, 200]
+    - eq: [body.code, 0]
+    - eq: [body.data.order_id, 789]
+
+test_cancel_order:
+  name: "取消订单"
+  request:
+    method: POST
+    url: /api/v1/order/cancel
+    json:
+      order_id: 789
+      reason: "不想要了"
+  validate:
+    - eq: [status_code, 200]
+    - eq: [body.code, 0]
+    - contains: [body.message, "取消成功"]

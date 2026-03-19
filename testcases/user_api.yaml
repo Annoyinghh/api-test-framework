@@ -1,0 +1,65 @@
+# 用户接口测试用例
+
+test_user_login_success:
+  name: "用户登录成功"
+  request:
+    method: POST
+    url: /api/v1/user/login
+    json:
+      username: "testuser"
+      password: "123456"
+  validate:
+    - eq: [status_code, 200]
+    - eq: [body.code, 0]
+    - contains: [body.message, "成功"]
+    - jsonpath: ["$.data.token", "token"]
+
+test_user_login_fail:
+  name: "用户登录失败-密码错误"
+  request:
+    method: POST
+    url: /api/v1/user/login
+    json:
+      username: "testuser"
+      password: "wrong_password"
+  validate:
+    - eq: [status_code, 200]
+    - eq: [body.code, 1001]
+    - contains: [body.message, "密码错误"]
+
+test_get_user_info:
+  name: "获取用户信息"
+  request:
+    method: GET
+    url: /api/v1/user/info
+    params:
+      user_id: 123
+    headers:
+      Authorization: Bearer test_token
+  validate:
+    - eq: [status_code, 200]
+    - eq: [body.code, 0]
+    - eq: [body.data.user_id, 123]
+
+test_update_user_info:
+  name: "更新用户信息"
+  request:
+    method: PUT
+    url: /api/v1/user/info
+    json:
+      user_id: 123
+      nickname: "新昵称"
+      email: "newemail@example.com"
+  validate:
+    - eq: [status_code, 200]
+    - eq: [body.code, 0]
+    - contains: [body.message, "更新成功"]
+
+test_delete_user:
+  name: "删除用户"
+  request:
+    method: DELETE
+    url: /api/v1/user/123
+  validate:
+    - eq: [status_code, 200]
+    - eq: [body.code, 0]

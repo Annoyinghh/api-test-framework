@@ -1,0 +1,32 @@
+*.pyc
+__pycache__/
+*.py[cod]
+*$py.class
+
+# 测试报告
+reports/
+.pytest_cache/
+htmlcov/
+.coverage
+
+# 日志文件
+logs/*.log
+
+# 虚拟环境
+venv/
+env/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# 系统文件
+.DS_Store
+Thumbs.db
+
+# Allure
+allure-results/
+allure-report/
